@@ -1,7 +1,7 @@
 const config = {
     // basename: only at build time to set, and Don't add '/' at end off BASENAME for breadcrumbs, also Don't put only '/' use blank('') instead,
     // like '/berry-material-react/react/default'
-    basename: '',
+    basename: '/admin',
     defaultPath: '/',
     fontFamily: `'Inter', sans-serif`,
     borderRadius: 12,
@@ -12,6 +12,7 @@ const config = {
     auth0ClientId: import.meta.env.VITE_AUTH0_CLIENT_ID,
     auth0Audience: import.meta.env.VITE_AUTH0_AUDIENCE,
     auth0Scope: import.meta.env.VITE_AUTH0_SCOPE,
+    auth0RedirectUri: import.meta.env.VITE_AUTH0_REDIRECT_URI,
 };
 
 export default config;

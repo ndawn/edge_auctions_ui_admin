@@ -49,7 +49,7 @@ const SupplyCreate = ({ onCreated }) => {
     return new Promise((resolve, reject) => {
       bulkCreateImages([file]).unwrap()
         .then((result) => {
-          setUploadedFilesCount(uploadedFilesCount + 1);
+          setUploadedFilesCount((prevCount) => prevCount + 1);
           resolve(result);
         })
         .catch((err) => reject(err));
@@ -71,17 +71,28 @@ const SupplyCreate = ({ onCreated }) => {
         setUploadedFilesCount(null);
       });
 
-  const createSession = () => {
+  const createSession = async () => {
     setIsLoading(true);
 
-    Promise.all(formData.files.map(uploadSingleFile))
-      .then((images) => handleCreateSession(images))
-      .catch((err) => {
-        console.error(err);
-        toast.error('При загрузке изображений произошла ошибка');
-        setIsLoading(false);
-      })
-      .finally(() => setUploadedFilesCount(null));
+    const createdImages = [];
+
+    try {
+      for (let file of formData.files) {
+        try {
+          createdImages.push(await uploadSingleFile(file));
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      await handleCreateSession(images);
+    } catch (err) {
+      console.error(err);
+      toast.error('При загрузке изображений произошла ошибка');
+      setIsLoading(false);
+    }
+
+    setUploadedFilesCount(null);
   };
 
   return <>

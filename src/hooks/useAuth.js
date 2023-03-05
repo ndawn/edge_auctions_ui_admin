@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 
 import auth0 from 'auth0-js';
 
-import { useGetMeQuery } from 'store/slices/api';
 import { setAccessToken as storeAccessToken } from 'store/slices/token';
 import config from 'config';
 
@@ -19,7 +18,7 @@ const useAuth = () => {
   const auth0Client = new auth0.WebAuth({
     domain: config.auth0Domain,
     clientID: config.auth0ClientId,
-    redirectUri: window.location.origin,
+    redirectUri: config.auth0RedirectUri,
     audience: config.auth0Audience,
     scope: config.auth0Scope,
     responseType: 'id_token token',
@@ -85,7 +84,7 @@ const useAuth = () => {
   };
 
   const logout = () => {
-    auth0Client.logout({ returnTo: window.location.origin });
+    auth0Client.logout({ returnTo: config.auth0RedirectUri });
   };
 
   return {

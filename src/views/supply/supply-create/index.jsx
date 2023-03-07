@@ -82,10 +82,11 @@ const SupplyCreate = ({ onCreated }) => {
           createdImages.push(await uploadSingleFile(file));
         } catch (err) {
           console.error(err);
+          toast.error(`Ошибка при загрузке файла: ${file.filename}`);
         }
       }
 
-      await handleCreateSession(images);
+      await handleCreateSession(createdImages);
     } catch (err) {
       console.error(err);
       toast.error('При загрузке изображений произошла ошибка');

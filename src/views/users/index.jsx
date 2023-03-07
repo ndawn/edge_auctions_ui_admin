@@ -28,6 +28,8 @@ const UsersView = () => {
   const [ isDeleting, setIsDeleting ] = useState(false);
 
   const updateableFields = [
+    'shopId',
+    'email',
     'firstName',
     'lastName',
     'isAdmin',
@@ -98,11 +100,13 @@ const UsersView = () => {
     {
       field: 'shopId',
       headerName: 'ID в магазине',
+      editable: true,
       flex: 0.2,
     },
     {
       field: 'email',
       headerName: 'Почта',
+      editable: true,
       flex: 0.5,
     },
     {
